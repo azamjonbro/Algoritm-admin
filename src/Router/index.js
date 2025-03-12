@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginPage from '@/View/Login/LoginPage.vue';
-import HomePage from '@/View/Home/HomePage.vue';
-import ErrorPage from '@/components/Template/404.vue'
+import LoginPage from '@/Views/Login/LoginPage.vue';
+import HomePage from '@/Views/Home/HomePage.vue';
 const routes = [
     {
         path: '/login',
@@ -13,11 +12,6 @@ const routes = [
         name: 'Home',
         component: HomePage,
     },
-    {
-        path: '/*',
-        name: 'Error',
-        component: ErrorPage,
-    }
 ];
 
 const router = createRouter({
