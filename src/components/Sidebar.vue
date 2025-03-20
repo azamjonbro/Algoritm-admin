@@ -21,7 +21,7 @@
         </div>
         <ul class="navbar-menu d-flex column gap12">
           <li
-            v-for="item in users[userName?.role] || []"
+            v-for="item in users[role] || []"
             :key="item.page"
             :class="activePage === item.page ? 'active' : 'left-item'"
             class="d-flex gap12"
@@ -32,7 +32,7 @@
           </li>
         </ul>
         <div class="navbar-buttonbox">
-          <div class="nav-name">{{ userName?.username }}</div>
+          <div class="nav-name">{{ userName }}</div>
           <Icons @click="exitLogin" name="exit" />
         </div>
       </div>
