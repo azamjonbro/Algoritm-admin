@@ -54,7 +54,7 @@
       return {
         activePage: "dashboard",
         userName: "Admin",
-        role: this.username?.role,
+        role: 'manager',
         isOpen: false,
         users: {
           manager: [
