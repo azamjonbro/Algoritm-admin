@@ -42,12 +42,14 @@
   </template>
   <script>
 //   import Toastiff from '@/Utils/Toastiff.vue';
-  import Icons from '@/components/Input.vue';
 //   import axios from '@/Utils/axios';
+  import Icons from '@/components/Input.vue';
   export default {
     name: "LoginPage",
     components: {
-        Icons
+        Icons,
+        // axios,
+        // Toastiff
     },
     data() {
     return {
