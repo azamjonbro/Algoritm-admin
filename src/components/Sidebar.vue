@@ -46,13 +46,14 @@
   import { defineAsyncComponent } from "vue";
   
   export default {
+    name:"SidebarPage",
     components: {
       Icons: defineAsyncComponent(() => import("./Icons.vue")),
     },
     data() {
       return {
         activePage: "dashboard",
-        userName: JSON.parse(localStorage.getItem("user")),
+        userName: "Admin",
         role: this.username?.role,
         isOpen: false,
         users: {
