@@ -58,14 +58,12 @@
         isOpen: false,
         users: {
           manager: [
-            { title: "Dashboard", icon: "home", page: "Managerdashboard" },
-            { title: "Nonvoylar", icon: "workers", page: "workers" },
-            { title: "Do'konlar", icon: "product", page: "magazine" },
-            { title: "Sozlamalar", icon: "setting", page: "settings" },
-            // { title: "Yetkazuvchilar", icon: "delivery", page: "delivery" },
-            // { title: "Chiqimlar", icon: "rasxod", page: "debt" },
-            // { title: "Omborxona", icon: "firma", page: "warehouse" },
-            // { title: "Non turlari", icon: "bread", page: "typeOfBread" },
+            { title: "Dashboard", icon: "home", page: "dashboard" },
+            { title: "d", icon: "home", page: "dashboard" },
+            { title: "Dashboard", icon: "home", page: "dashboard" },
+            { title: "Dashboard", icon: "home", page: "dashboard" },
+            { title: "Dashboard", icon: "home", page: "dashboard" },
+            
           ],
         },
       };
