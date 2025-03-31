@@ -59,8 +59,8 @@
         users: {
           manager: [
             { title: "Dashboard", icon: "home", page: "dashboard" },
-            { title: "d", icon: "home", page: "dashboard" },
-            { title: "Dashboard", icon: "home", page: "dashboard" },
+            { title: "Certificates", icon: "sertificat", page: "sertificat" },
+            { title: "Events", icon: "event", page: "event" },
             { title: "Dashboard", icon: "home", page: "dashboard" },
             { title: "Dashboard", icon: "home", page: "dashboard" },
             
