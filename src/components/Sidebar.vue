@@ -98,21 +98,6 @@
     mounted() {
       document.addEventListener("touchstart", this.handleTouchStart);
       document.addEventListener("touchmove", this.handleTouchMove);
-      const role = JSON.parse(localStorage.getItem("user")).role || "";
-      switch (role) {
-        case "superAdmin":
-          this.setActive("dashboard");
-          break;
-        case "manager":
-          this.setActive("Managerdashboard");
-          break;
-        case "seller":
-          this.setActive("sellerDash");
-          break;
-        case "delivery":
-          this.setActive("homeDelivery");
-          break;
-      }
     },
     beforeUnmount() {
       document.removeEventListener("touchstart", this.handleTouchStart);
