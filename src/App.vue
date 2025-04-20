@@ -6,7 +6,12 @@
 
 export default {
   name: 'App',
-  components: {
+  mounted(){
+    let userToken = JSON.parse(localStorage.getItem("user"))
+    console.log(userToken);
+    if(!userToken?.token){
+      this.$route.push('/login')
+    }
   }
 }
 </script>
