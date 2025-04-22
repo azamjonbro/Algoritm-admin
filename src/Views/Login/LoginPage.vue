@@ -1,3 +1,83 @@
+<script>
+  import Toastiff from '@/Utils/Toastiff.vue';
+  import api from '@/Utils/axios';
+  import Icons from '@/components/Icons.vue';
+  export default {
+    name: "LoginPage",
+    components: {
+        Icons,
+        Toastiff
+    },
+    data() {
+    return {
+      login: '',
+      showSvg:false,
+      password: '',
+      type: false,
+      loading: false, 
+      toastOptions: {
+        open: false,
+        text: "",
+      },
+    }
+  },
+  methods: {
+    async handleLogin() {
+      
+      if (!this.login || !this.password) {
+        this.toastOptions = {
+          open: true,
+          text: "Iltimos, login va parolni kiriting",
+          type: "error",
+        };
+        return;
+      }
+  
+      this.loading = true; 
+  
+      try {
+        const response = await api.post('/user/signin', {
+          username: this.login,
+          password: this.password
+        });
+        console.log(response);
+        
+        if (response.status==201|| response.status==200) {
+          this.toastOptions = {
+            open: true,
+            text: "Вход успешен",
+            type:"success",
+          };
+          localStorage.setItem('user', JSON.stringify(response?.data));
+          this.$router.push('/');
+        }
+        else{
+          this.toastOptions = {
+            open: true,
+            text: "Kirib bolmaydi",
+            type:"error",
+          };
+        }
+      } catch (error) {
+        this.toastOptions = {
+          open: true,
+          text: error.response?.data?.message || "Xatolik yuz berdi",
+          type: "error"
+        };
+      } finally {
+        this.loading = false;
+      }
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showSvg = true;
+    }, 0); 
+  }
+  
+  }
+  </script>
+
 <template>
     <div class="login">
       <div class="left-content">
@@ -42,75 +122,4 @@
     </div>
     <Toastiff :toastOptions="toastOptions" />
   </template>
-  <script>
-//   import Toastiff from '@/Utils/Toastiff.vue';
-//   import axios from '@/Utils/axios';
-  import Icons from '@/components/Icons.vue';
-  export default {
-    name: "LoginPage",
-    components: {
-        Icons,
-        // axios,
-        // Toastiff
-    },
-    data() {
-    return {
-      login: '',
-      showSvg:false,
-      password: '',
-      type: false,
-      loading: false, 
-      toastOptions: {
-        open: false,
-        text: "",
-      },
-    }
-  },
-  methods: {
-    // async handleLogin() {
-      
-    //   if (!this.login || !this.password) {
-    //     this.toastOptions = {
-    //       open: true,
-    //       text: "Iltimos, login va parolni kiriting",
-    //       type: "error",
-    //     };
-    //     return;
-    //   }
-  
-    //   this.loading = true; 
-  
-    //   try {
-    //     const response = await axios.post('/api/login', {
-    //       username: this.login,
-    //       password: this.password
-    //     });
-        
-    //     if (response.status === 200) {
-    //       this.toastOptions = {
-    //         open: true,
-    //         text: "Вход успешен",
-    //         type:"success",
-    //       };
-    //       localStorage.setItem('user', JSON.stringify(response.data));
-    //       this.$router.push('/');
-    //     }
-    //   } catch (error) {
-    //     this.toastOptions = {
-    //       open: true,
-    //       text: error.response?.data?.message || "Xatolik yuz berdi",
-    //       type: "error"
-    //     };
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.showSvg = true;
-    }, 0); 
-  }
-  
-  }
-  </script>
+ 
