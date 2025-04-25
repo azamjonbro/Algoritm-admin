@@ -30,16 +30,14 @@
             </div>
         </div>
     </div>
-    <StatisticsModal v-if="openModal" @close="openModal=event"/>
+    <!-- <StatisticsModal v-if="openModal" @close="openModal=event"/> -->
 </template>
 <script>
 import axios from '@/Utils/axios';
-import StatisticsModal from './StatisticsModal.vue';
 import Icons from '@/components/Icons.vue';
 export default {
-    name:"StatisticsPage",
+    name:"SertificatePage",
     components:{
-        StatisticsModal,
         Icons
     },
     data(){

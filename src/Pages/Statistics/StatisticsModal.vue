@@ -3,98 +3,35 @@
       <div class="modal" @click.self="$emit('close')">
         <div class="modal-content relative">
           <Icons name="xIcon" class="xIcon" @click="closeModal" />
-          <h2>Do`kon yaratish</h2>
+          <h2>Statistika qo‘shish</h2>
   
-          <form>
-            <div class="modal-form">
-              <div class="form-group">
-                <label for="title">Nomi</label>
-                <input
-                  id="title"
-                  type="text"
-                  placeholder="Do`kon nomi narxini raqamini kiriting"
-                  @blur="validateField('title')"
-                  v-model="shop.title"
-                />
-                <p v-if="errors.title" class="error-text">{{ errors.title }}</p>
-              </div>
-  
-              <div class="form-group">
-                <label for="description">Tavsif</label>
-                <input
-                  id="description"
-                  type="text"
-                  placeholder="Do`kon nonni description raqamini kiriting"
-                  @blur="validateField('description')"
-                  v-model="shop.description"
-                />
-                <p v-if="errors.description" class="error-text">
-                  {{ errors.description }}
-                </p>
-              </div>
-  
-              <div class="form-group">
-                <label for="sellerBreadId">Non turi</label>
-                <CustomSelect
-                  :search="true"
-                  :options="breads"
-                  @blur="validateField('sellerBreadId')"
-                  @input="selectBreadId($event)"
-                  :placeholder="'Non turini kiriting'"
-                  :selected="shop.sellerBreadId"
-                />
-                <p v-if="errors.sellerBreadId" class="error-text">
-                  {{ errors.sellerBreadId }}
-                </p>
-              </div>
-              <div class="form-group">
-                <label for="price">Narxi</label>
-                <input
-                  id="price"
-                  type="number"
-                  placeholder="Do`kon nonni narxini raqamini kiriting"
-                  @blur="validateField('price')"
-                  v-model="shop.price"
-                />
-                <p v-if="errors.price" class="error-text">{{ errors.price }}</p>
-              </div>
-              <div class="form-group">
-                <label for="quantity">Soni (Dona)</label>
-                <input
-                  id="quantity"
-                  type="number"
-                  placeholder="Do`kon nonni Soni (Dona) kiriting"
-                  @blur="validateField('quantity')"
-                  v-model="shop.quantity"
-                />
-                <p v-if="errors.quantity" class="error-text">
-                  {{ errors.quantity }}
-                </p>
-              </div>
+          <form @submit.prevent="submitForm" class="form" style="margin-top: 1rem;">
+            <div class="input-row">
+              <input
+                v-model="form.title"
+                type="text"
+                placeholder="Title"
+                class="input"
+                required
+              />
+              <input
+                v-model="form.integer"
+                type="integer"
+                placeholder="integer"
+                class="input"
+                required
+              />
             </div>
-          </form>
   
-          <div class="modal-buttons d-flex j-end a-center gap24">
-            <button type="button" class="action-button" @click="closeModal">
-              Chiqish
-            </button>
-            <button
-              type="submit"
-              @click="submitForm"
-              class="action-button"
-              :disabled="isSubmitting"
-            >
-              {{
-                !isUpdate
-                  ? isSubmitting
-                    ? "Yaratilmoqda..."
-                    : "Yaratish"
-                  : isSubmitting
-                  ? "Yangilanmoqda..."
-                  : "Yangilash"
-              }}
-            </button>
-          </div>
+            <textarea
+              v-model="form.subtitle"
+              placeholder="subtitle"
+              class="textarea"
+              required
+            ></textarea>
+  
+            <button type="submit" class="submit-button">Yuborish</button>
+          </form>
         </div>
       </div>
     </transition>
@@ -102,27 +39,78 @@
   
   <script>
   import Icons from "@/components/Icons.vue";
-  import CustomSelect from "@/components/customSelect.vue";
+  import axios from "@/Utils/axios";
   
   export default {
     components: {
       Icons,
-      CustomSelect,
     },
     data() {
       return {
-        
+        form: {
+          title: "",
+          integer: "",
+          subtitle: "",
+        },
       };
     },
-    props: {
-      update: {
-        type: Object,
-      },
-    },
     methods: {
-      
+      closeModal() {
+        this.$emit("close", false);
+      },
+      async submitForm() {
+        try {
+          let response = await axios.post("/statistics", this.form);
+          console.log(response)
+          this.$emit("close", true);
+        } catch (error) {
+          console.error("Xatolik:", error);
+        }
+      },
     },
   };
   </script>
   
-  <style></style>
+  <style scoped>
+  .input-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .textarea {
+    width: 100%;
+    height: 130px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    resize: none;
+    margin-bottom: 1rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submit-button:hover {
+    background-color: #1e40af;
+  }
+  </style>
+  
