@@ -18,7 +18,7 @@
           manager: [
             { title: "Dashboard", icon: "home", page: "dashboard" },
             { title: "Statistics", icon: "algorithm", page: "statistics" },
-            { title: "Certificates", icon: "sertificat", page: "sertificat" },
+            { title: "Certificates", icon: "sertificat", page: "sertificate" },
             { title: "Events", icon: "event", page: "event" },
             { title: "Settings", icon: "setting", page: "settings" },
           ],
@@ -85,6 +85,7 @@
             fill="#5565FF"
           />
         </svg>
+        <!-- <h3>Algoritm</h3> -->
       </div>
       <ul class="navbar-menu d-flex column gap12">
         <li
