@@ -9,8 +9,8 @@ export default {
   mounted(){
     let userToken = JSON.parse(localStorage.getItem("user"))
     console.log(userToken);
-    if(!userToken?.token){
-      this.$route.push('/login')
+    if(!userToken){
+      this.$router.push('/login')
     }
   }
 }
