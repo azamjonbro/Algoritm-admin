@@ -1,4 +1,3 @@
-// axios.js
 import axios from 'axios';
 
 const instance = axios.create({
@@ -18,11 +17,9 @@ instance.interceptors.request.use(config => {
   return Promise.reject(error);
 });
 
-// Javobga ishlovchi interceptor (ixtiyoriy)
 instance.interceptors.response.use(response => {
   return response;
 }, error => {
-  // Xatolikni log qilish, status kodga qarab muomala qilish mumkin
   console.error('Axios error:', error);
   return Promise.reject(error);
 });
