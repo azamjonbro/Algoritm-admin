@@ -3,14 +3,12 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://iticket-h3jg.onrender.com', 
-  timeout: 10000, // Maksimal kutish vaqti (ms)
+  timeout: 10000, 
   headers: {
     'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer token', // Agar kerak bo'lsa token qo'shing
   }
 });
 instance.interceptors.request.use(config => {
-  // Tokenni localStorage yoki boshqa joydan olib qo'shish mumkin
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
