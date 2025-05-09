@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://iticket-h3jg.onrender.com', 
+  baseURL: 'https://algoweb-production.up.railway.app', 
   timeout: 10000, 
   headers: {
     'Content-Type': 'application/json',

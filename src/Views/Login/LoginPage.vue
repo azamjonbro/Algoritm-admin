@@ -14,7 +14,7 @@
       showSvg:false,
       password: '',
       type: false,
-      loading: false, 
+      loading: false,
       toastOptions: {
         open: false,
         text: "",
@@ -23,7 +23,7 @@
   },
   methods: {
     async handleLogin() {
-      
+
       if (!this.login || !this.password) {
         this.toastOptions = {
           open: true,
@@ -32,16 +32,16 @@
         };
         return;
       }
-  
-      this.loading = true; 
-  
+
+      this.loading = true;
+
       try {
         const response = await api.post('/user/signin', {
           username: this.login,
           password: this.password
         });
         console.log(response);
-        
+
         if (response.status==201|| response.status==200) {
           this.toastOptions = {
             open: true,
@@ -72,9 +72,9 @@
   mounted() {
     setTimeout(() => {
       this.showSvg = true;
-    }, 0); 
+    }, 0);
   }
-  
+
   }
   </script>
 
@@ -122,4 +122,3 @@
     </div>
     <Toastiff :toastOptions="toastOptions" />
   </template>
- 
