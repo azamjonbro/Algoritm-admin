@@ -16,56 +16,81 @@
                 </div>
                 <div class="table-body">
                     <div class="row" v-for="data in statistics" :key="data.id">
-                        <div class="cell" :title="data.title">{{ data?.title.slice(0,20) }}...</div>
+                        <div class="cell" :title="data.title">{{ data?.title.slice(0, 20) }}...</div>
                         <!-- {{data}} -->
-                        <div class="cell" :title="data.subtitle">{{ data?.subtitle.slice(0,15) }}...</div> 
+                        <div class="cell" :title="data.subtitle">{{ data?.subtitle.slice(0, 15) }}...</div>
                         <div class="cell">{{ data?.integer }}</div>
                         <div class="cell d-flex gap12 j-end">
-                            <Icons name="edit" class="icon info"/>
-                            <Icons name="deleted" class="icon danger"/>
+                            <Icons name="edit" class="icon info" />
+                            <Icons name="deleted" class="icon danger" />
 
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <StatisticsModal v-if="openModal" @close="openModal=event"/>
+    <StatisticsModal v-if="openModal" @close="openModal=false" @status="closeModalEvent($event)" />
+     <Toastiff :toastOptions="toastOptions" />
 </template>
 <script>
 import axios from '@/Utils/axios';
 import StatisticsModal from './StatisticsModal.vue';
 import Icons from '@/components/Icons.vue';
+import Toastiff from '@/Utils/Toastiff.vue';
 export default {
-    name:"StatisticsPage",
-    components:{
+    name: "StatisticsPage",
+    components: {
         StatisticsModal,
-        Icons
+        Icons,
+        Toastiff
     },
-    data(){
-        return{
-            statistics:[],
-            openModal:false
+    data() {
+        return {
+            statistics: [],
+            openModal: false,
+            toastOptions: {
+                open: false,
+                text: "",
+                style: { background: "#4CAF50" },
+            },
         }
     },
-    methods:{
-        async getAllStatistics(){
+    methods: {
+        async getAllStatistics() {
             let response = await axios.get('/statistics')
-            this.statistics=response?.data
+            this.statistics = response?.data
         },
-        openModalFunc(){
-            this.openModal=!this.openModal
+        openModalFunc() {
+            this.openModal = !this.openModal
             console.log(this.openModal);
-            
+
+        },
+        closeModalEvent(element) {
+            if (element.status == "success") {
+                this.openModal = false
+                this.toastOptions={
+                    open:true,
+                    text:element.message,
+                    style: { background:"#5565FF" },
+                    
+                }
+            }else{
+                this.openModal = false
+                this.toastOptions={
+                    open:true,
+                    text:element.message,
+                    style: { background:"#F30300" },
+                }
+            }
+
         }
     },
-    mounted(){
+    mounted() {
         this.getAllStatistics()
-        
+
 
     }
 }
 </script>
-<style >
-    
-</style>
+<style></style>
