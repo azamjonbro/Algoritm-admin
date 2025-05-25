@@ -22,8 +22,7 @@
                         <div class="cell">{{ data?.integer }}</div>
                         <div class="cell d-flex gap12 j-end">
                             <Icons name="edit" class="icon info" />
-                            <Icons name="deleted" class="icon danger" />
-
+                            <Icons name="deleted" class="icon danger" @click="deleteItem(data.id)"/>
                         </div>
                     </div>
                 </div>
@@ -75,6 +74,7 @@ export default {
                     style: { background:"#5565FF" },
                     
                 }
+                this.getAllStatistics()
             }else{
                 this.openModal = false
                 this.toastOptions={
@@ -83,6 +83,20 @@ export default {
                     style: { background:"#F30300" },
                 }
             }
+
+        },
+        async deleteItem(item){
+            console.log(item);
+            let res =await axios.delete("/statistics/"+item)
+            if(res.status==200){
+                this.getAllStatistics()
+                this.toastOptions={
+                    open:true,
+                    text:"Statistics successfully deleted",
+                    style:{background:"#F30300"}
+                }
+            }
+            
 
         }
     },
