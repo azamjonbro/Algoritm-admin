@@ -25,6 +25,9 @@
 import axios from "@/Utils/axios";
 
 export default {
+  props:{
+    editOneProfile:{}
+  },
   components: {
   },
   data() {
@@ -34,6 +37,7 @@ export default {
         integer: "",
         subtitle: "",
       },
+      id:null
     };
   },
   methods: {
@@ -41,21 +45,47 @@ export default {
       this.$emit("close", false);
     },
     async submitForm() {
+      
       try {
-        let response = await axios.post("/statistics", this.form);
+        if(this.id){
+          let response = await axios.patch("/statistics/"+this.id, this.form);
         if (response.status == 201 || response.status == 200) {
           this.$emit("status", { status: "success", message: "Statistics successfully created" });
         }
         else {
           this.$emit("status", { status: "error", message: "Error adding statistics" });
         }
+        }else{
+          let response = await axios.post("/statistics", this.form);
+        if (response.status == 201 || response.status == 200) {
+          this.$emit("status", { status: "success", message: "Statistics successfully created" });
+        }
+        else {
+          this.$emit("status", { status: "error", message: "Error adding statistics" });
+        }
+        }
       } catch (error) {
         console.error("Xatolik:", error);
         this.$emit("close", { status: "error", message: "Error adding statistics" });
 
       }
+      this.id=null
+      this.form={
+        title: "",
+        integer: "",
+        subtitle: "",
+      }
     },
+    
   },
+  mounted(){
+    this.id=this.editOneProfile.id
+    this.form={
+      title:this.editOneProfile.title,
+      integer:this.editOneProfile.integer,
+      subtitle:this.editOneProfile.subtitle
+    }
+  }
 };
 </script>
 
