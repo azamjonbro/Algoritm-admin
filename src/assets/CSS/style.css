@@ -318,6 +318,9 @@ li {
 
 .scroll::-webkit-scrollbar {
   width: 8px;
+  height: 8px; 
+  /* Bu yerda bitta kichkina hatolik qolib ketgan ekan sababi 
+  bu yerda agar x oqidan scroll ochilsa buni heighti katta bolib ketarkan */
 }
 
 .scroll::-webkit-scrollbar-track {
