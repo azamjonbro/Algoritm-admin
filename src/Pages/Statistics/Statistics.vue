@@ -21,7 +21,7 @@
                         <div class="cell" :title="data.subtitle">{{ data?.subtitle.slice(0, 15) }}...</div>
                         <div class="cell">{{ data?.integer }}</div>
                         <div class="cell d-flex gap12 j-end">
-                            <Icons name="edit" class="icon info" />
+                            <Icons name="edit" class="icon info" @click="editProfile(data)" />
                             <Icons name="deleted" class="icon danger" @click="deleteItem(data.id)"/>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <StatisticsModal v-if="openModal" @close="openModal=false" @status="closeModalEvent($event)" />
+    <StatisticsModal v-if="openModal"  :editOneProfile="oneStatistics" @close="openModal=false" @status="closeModalEvent($event)" />
      <Toastiff :toastOptions="toastOptions" />
 </template>
 <script>
@@ -48,6 +48,7 @@ export default {
         return {
             statistics: [],
             openModal: false,
+            oneStatistics:{},
             toastOptions: {
                 open: false,
                 text: "",
@@ -71,8 +72,7 @@ export default {
                 this.toastOptions={
                     open:true,
                     text:element.message,
-                    style: { background:"#5565FF" },
-                    
+                    style: { background:"#5565FF" },   
                 }
                 this.getAllStatistics()
             }else{
@@ -83,7 +83,6 @@ export default {
                     style: { background:"#F30300" },
                 }
             }
-
         },
         async deleteItem(item){
             console.log(item);
@@ -96,15 +95,17 @@ export default {
                     style:{background:"#F30300"}
                 }
             }
-            
-
+        },
+        editProfile(element){
+            console.log(element);
+            this.oneStatistics=element
+            this.openModal=true
         }
     },
     mounted() {
         this.getAllStatistics()
-
-
     }
 }
 </script>
-<style></style>
+<style>
+</style>
