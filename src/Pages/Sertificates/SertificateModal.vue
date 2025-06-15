@@ -92,11 +92,18 @@ export default {
     async submitForm() {
       try {
         let response = await axios.post("/sertificate", this.form);
-        console.log("Server javobi:", response);
-        this.$emit("close", true);
+        if(response.status==201){
+          this.$emit("status", {message:"Sertificate successfully created"});
+        }
+        else{
+          this.$emit("status", {message:"Error inserting certificate"});
+        }
+        this.closeModal()
+
       } catch (error) {
-        console.error("Xatolik:", error);
+        this.$emit("status", {message:"Error inserting certificate"});
       }
+      this.closeModal()
     },
   },
 };

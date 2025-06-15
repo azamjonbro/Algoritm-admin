@@ -5,7 +5,7 @@
             <button class="create-button" @click="openModalFunc">Create Sertificate</button>
         </div>
         <div class="page-bottom">
-            <div class="table">
+            <div class="table scroll">
                 <div class="table-header">
                     <div class="row">
                         <div class="cell">ID</div>
@@ -24,14 +24,14 @@
                         <div class="cell">{{ data?.accepted_Date }}</div>
                         <div class="cell d-flex gap12 j-end">
                             <Icons name="edit" class="icon info"/>
-                            <Icons name="deleted" class="icon danger"/>
+                            <Icons name="deleted" class="icon danger" @click="deleteUser(data?.id)"/>
                         </div> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <SertificateModal v-if="openModal" @close="openModal=event"/>
+    <SertificateModal v-if="openModal" @close="openModal=event" @status="CreatedSertificate($event)"/>
 </template>
 <script>
 import axios from '@/Utils/axios';
@@ -58,6 +58,18 @@ export default {
             this.openModal=!this.openModal
             console.log(this.openModal);
             
+        },
+        CreatedSertificate(item){
+            console.log(item);
+            this.getAllStatistics()
+            this.openModal=false
+        },
+        async deleteUser(id){
+            let response = await axios.delete('/sertificate/'+id)
+            console.log(response);
+            if(response.status==200){
+                this.getAllStatistics()
+            }
         }
     },
     mounted(){
