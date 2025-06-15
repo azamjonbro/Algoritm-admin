@@ -89,7 +89,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 .input-row {
   display: flex;
   gap: 1rem;
