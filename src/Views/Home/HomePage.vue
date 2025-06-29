@@ -4,7 +4,7 @@
         <main class="main">
 
             <Statistics v-if="activePage=='statistics'"/>
-            <Sertificate v-if="activePage=='sertificate'"/>
+            <Sertificate v-if="activePage=='dashboard'"/>
             <Settings v-if="activePage=='settings'"/>
         </main>
     </div>
@@ -32,6 +32,10 @@ export default {
       this.activePage = page;
     },
   },
+  mounted(){
+    this.activePage="dashboard"
+    
+  }
 }
 </script>
 <style >

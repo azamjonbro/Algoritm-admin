@@ -215,9 +215,18 @@
         this.currentMonth = month;
         this.currentMode = 'date';
       },
+      formatDate(item) {
+        if (!item) return '';
+        const date = new Date(item);
+        if (isNaN(date)) return '';
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      },
       selectDate(day) {
         this.selectedDate = day.date;
-        this.$emit('dateSelected', this.selectedDate.toISOString())
+        this.$emit('dateSelected', this.formatDate(this.selectedDate))
         if (!day.isCurrentMonth) {
           this.currentMonth = day.date.getMonth();
           this.currentYear = day.date.getFullYear();
@@ -238,5 +247,182 @@
   <style>
   .page_search {
     width: 100% !important;
+  }
+ .unique-label{
+    width:100%;
+  }
+  
+  .unique-date-picker {
+    position: absolute;
+    top:55px;
+    left: 0;
+    padding: 12px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+    width: 360px;
+    z-index: 10;
+  }
+  
+  .unique-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+  
+  .unique-dropdown {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .unique-body {
+    text-align: center;
+  }
+  
+  .unique-weekdays, .unique-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .unique-weekday{
+    border-bottom: 1px solid #919191;
+  }
+  .unique-weekday, .unique-day {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .unique-day {
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .unique-day:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .unique-today {
+    font-weight: bold;
+    border:1px solid #ccc;
+  }
+  
+  .unique-selected {
+    background-color: #007AFF;
+    color: #fff;
+  }
+  
+  .unique-not-current {
+    color: #919191;
+  }
+  
+  .unique-years, .unique-months {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .unique-year  {
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .unique-month{
+    padding: 10px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .unique-year:hover, .unique-month:hover {
+    background-color: #007AFF;
+    color: #fff;
+  }
+
+
+
+  /* kommerchiskiy app */
+
+
+  textarea {
+    margin-top: 24px;
+    width: 100%;
+    min-height: 170px;
+    font-size: 24px;
+    resize: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    outline: none;
+    border: 0.5px solid #91919156;
+    color: black;
+  }
+  
+  .userinfoPage {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 20px;
+  }
+  
+  .userText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .userText > input {
+    font-size: 18px;
+  }
+  
+  .username {
+    min-width: 500px;
+  }
+  
+  .kommerApp {
+    margin-top: 40px;
+  }
+  
+  .kommerdata {
+    min-width: 100%;
+  }
+  
+  .detali {
+    font-size: 24px;
+  }
+  
+  .detalization {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0px 100px;
+  }
+  
+  .detalization > .left,
+  .detalization > .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .detalization > .left {
+    gap: 50px;
+  }
+  
+  .detalization > .left > label {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  
+  .right > input {
+    padding: 12px 12px;
+    font-size: 16px;
+  }
+  .boxdata{
+    padding: 12px;
+  }
+  .boxdata>h2{
+    font-size: 20px;
+    font-weight: 700;
   }
   </style>
