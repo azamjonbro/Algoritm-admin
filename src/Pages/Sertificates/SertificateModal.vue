@@ -10,14 +10,14 @@
             <input
               v-model="form.first_Name"
               type="text"
-              placeholder="Ism yozish kere"
+              placeholder="Ism"
               class="input"
               required
             />
             <input
               v-model="form.last_Name"
               type="text"
-              placeholder="Familiya yozish kere"
+              placeholder="Familiya"
               class="input"
               required
             />
@@ -27,27 +27,42 @@
             <input
               v-model="form.stack"
               type="text"
-              placeholder="Yonalish yozish kere"
+              placeholder="Yonalishi"
               class="input"
               required
+              
             />
-            <input
+            <!-- <input
               v-model="form.accepted_Date"
               type="date"
               placeholder="Qabul qilingan vaqt"
               class="input"
               required
-            />
+            /> -->
+            <div class="input border1 d-flex a-center radius1 relative">
+              <DatePicker @dateSelected="selectDate($event)"/>
+            </div>
+
           </div>
 
+          <div class="input-row">
           <input
-            v-model="form.sertificate_Id"
+            v-model="form.teachername"
             type="text"
-            placeholder="Sertifikat ID yozish kere"
+            placeholder="Teacher ismi"
             class="input"
             required
             style="margin-bottom: 1rem;"
           />
+          <input
+            v-model="form.sertificate_Id"
+            type="text"
+            placeholder="Sertifikat ID "
+            class="input"
+            required
+            style="margin-bottom: 1rem;"
+          />
+          </div>
 
           <div class="input-row">
             <label>
@@ -66,12 +81,14 @@
   </transition>
 </template>
 <script>
+import DatePicker from '@/components/DatePicker.vue';
 import Icons from "@/components/Icons.vue";
 import axios from "@/Utils/axios";
 
 export default {
   components: {
     Icons,
+    DatePicker
   },
   data() {
     return {
@@ -86,6 +103,9 @@ export default {
     };
   },
   methods: {
+    selectDate(item){
+      this.form.accepted_Date=item
+    },
     closeModal() {
       this.$emit("close", false);
     },

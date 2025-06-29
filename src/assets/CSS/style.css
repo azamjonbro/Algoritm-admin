@@ -62,6 +62,37 @@
   src: url('../Fonts/noto-sans-v38-latin-900.woff2') format('woff2');
 }
 
+@font-face {
+  font-display: swap;
+  font-family: 'Tele-Marianes';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../Fonts/Telev2.woff') format('woff');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Tele-Marianes';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../Fonts/Telev2c.woff') format('woff');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Tele-Marianes';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../Fonts/Telev2s.woff') format('woff');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Tele-Marianes';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../Fonts/Telev2cb.woff') format('woff');
+}
+
+
 *,
 *::after,
 *::before {
