@@ -66,7 +66,6 @@
 import axios from "@/Utils/axios";
 import Icons from "@/components/Icons.vue";
 import SertificateModal from "./SertificateModal.vue";
-import EskiData from "../../assets/data.json";
 export default {
   name: "SertificatePage",
   components: {
@@ -125,8 +124,6 @@ export default {
     async getAllStatistics() {
       let response = await axios.get("/sertificate");
       console.log("data keldi",response.data);
-
-      this.statistics = [...response?.data, ...EskiData].reverse();
     },
     openModalFunc() {
       this.openModal = !this.openModal;
