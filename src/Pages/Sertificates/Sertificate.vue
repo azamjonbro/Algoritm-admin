@@ -19,6 +19,7 @@
       <div class="table scroll">
         <div class="table-header">
           <div class="row">
+            <div class="cell">Index</div>
             <div class="cell">ID</div>
             <div class="cell">Name</div>
             <div class="cell">Teacher</div>
@@ -29,6 +30,7 @@
         </div>
         <div class="table-body">
           <div class="row" v-for="(data,index) in filteredStatistics" :key="index">
+            <div class="cell">{{ index }}</div>
             <div class="cell">{{ data?.sertificate_Id || data.id }}</div>
             <div class="cell" :title="data.title">
               {{
@@ -37,7 +39,7 @@
               }}
             </div>
             <!-- {{ data }} -->
-            <div class="cell">{{ data?.teachername||'----' }}</div>
+            <div class="cell">{{ data?.teacherName||'----' }}</div>
             <div class="cell" :title="data.subtitle">
               {{ data?.stack || data?.courseName }}
             </div>
@@ -124,6 +126,7 @@ export default {
     async getAllStatistics() {
       let response = await axios.get("/sertificate");
       console.log("data keldi",response.data);
+      this.statistics=response.data
     },
     openModalFunc() {
       this.openModal = !this.openModal;
