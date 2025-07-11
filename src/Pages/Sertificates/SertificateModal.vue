@@ -7,88 +7,68 @@
 
         <form @submit.prevent="submitForm" class="form" style="margin-top: 1rem;">
           <div class="input-row">
-            <input
-              v-model="form.first_Name"
-              type="text"
-              placeholder="Ism"
-              class="input"
-              required
-            />
-            <input
-              v-model="form.last_Name"
-              type="text"
-              placeholder="Familiya"
-              class="input"
-              required
-            />
+            <input v-model="form.first_Name" type="text" placeholder="Ism" class="input" required />
+            <input v-model="form.last_Name" type="text" placeholder="Familiya" class="input" required />
           </div>
 
           <div class="input-row">
-            <input
-              v-model="form.stack"
-              type="text"
-              placeholder="Yonalishi"
-              class="input"
-              required
-              
+            <CustomSelect
+              style="width: 49.5%;"
+              :search="true"
+              :selected="form.stack"
+              @input="ItemSelect($event)"
+              :options="option"
+              :value="form.stack"
             />
-            <!-- <input
-              v-model="form.accepted_Date"
-              type="date"
-              placeholder="Qabul qilingan vaqt"
-              class="input"
-              required
-            /> -->
             <div class="input border1 d-flex a-center radius1 relative">
-              <DatePicker @dateSelected="selectDate($event)"/>
+              <DatePicker :modelValue="form.accepted_Date" @dateSelected="selectDate($event)" />
             </div>
-
           </div>
 
           <div class="input-row">
-          <input
-            v-model="form.teachername"
-            type="text"
-            placeholder="Teacher ismi"
-            class="input"
-            required
-            style="margin-bottom: 1rem;"
-          />
-          <input
-            v-model="form.sertificate_Id"
-            type="text"
-            placeholder="Sertifikat ID "
-            class="input"
-            required
-            style="margin-bottom: 1rem;"
-          />
+            <input v-model="form.teacherName" type="text" placeholder="Teacher ismi" class="input" required style="margin-bottom: 1rem;" />
+            <input v-model="form.sertificate_Id" readonly type="text" placeholder="Sertifikat ID " class="input" style="margin-bottom: 1rem;" />
           </div>
 
           <div class="input-row">
             <label>
-              <input
-                type="checkbox"
-                v-model="form.is_active"
-              />
+              <input type="checkbox" v-model="form.is_active" />
               Faol holatda
             </label>
           </div>
 
-          <button type="submit" class="submit-button">Yuborish</button>
+          <button type="submit" class="submit-button">{{ edit ? "Yangilash" : "Yuborish" }}</button>
+          <input
+            type="text"
+            placeholder="Agar boshqa yo'nalish bo‘lsa foydalaning"
+            class="border1 w-50 radius1"
+            style="margin-top: 40px; font-size: 20px;"
+            v-model="form.stack"
+          />
         </form>
       </div>
     </div>
   </transition>
 </template>
+
 <script>
 import DatePicker from '@/components/DatePicker.vue';
 import Icons from "@/components/Icons.vue";
 import axios from "@/Utils/axios";
+import { generateNumericId } from './idgenerator';
+import CustomSelect from '@/components/CustomSelect.vue';
 
 export default {
+  props: {
+    edit: {
+      type: Object,
+      default: null
+    }
+  },
   components: {
     Icons,
-    DatePicker
+    DatePicker,
+    CustomSelect
   },
   data() {
     return {
@@ -98,33 +78,88 @@ export default {
         stack: "",
         accepted_Date: "",
         sertificate_Id: "",
+        teacherName: "",
         is_active: true,
       },
+      option: [
+        { text: "Front End", value: "Front End" },
+        { text: "Back end", value: "Back End" },
+        { text: "Full Stack", value: "Full Stack" },
+        { text: "Kiberxavfsizlik", value: "Kiberxavfsizlik" },
+        { text: "SMM", value: "SMM" },
+        { text: "IT Kids", value: "IT Kids" },
+        { text: "Grafik dizayn", value: "Grafik dizayn" },
+      ]
     };
   },
+  watch: {
+    edit: {
+      immediate: true,
+      handler(newVal) {
+        if (newVal) {
+          this.form = { ...newVal };
+        } else {
+          this.resetForm();
+        }
+      }
+    }
+  },
   methods: {
-    selectDate(item){
-      this.form.accepted_Date=item
+    ItemSelect(item) {
+      this.form.stack = item;
+    },
+    generateId() {
+      this.form.sertificate_Id = generateNumericId();
+    },
+    selectDate(item) {
+      this.form.accepted_Date = item;
     },
     closeModal() {
+      this.resetForm();
       this.$emit("close", false);
+    },
+    resetForm() {
+      this.form = {
+        first_Name: "",
+        last_Name: "",
+        stack: "",
+        accepted_Date: "",
+        sertificate_Id: "",
+        teacherName: "",
+        is_active: true,
+      };
+      this.generateId();
+      this.$emit("reset-edit"); // parentda this.edit=null qilish uchun
     },
     async submitForm() {
       try {
-        let response = await axios.post("/sertificate", this.form);
-        if(response.status==201){
-          this.$emit("status", {message:"Sertificate successfully created"});
+        let response;
+        if (this.edit && this.edit.id) {
+          
+          response = await axios.patch(`/sertificate/${this.edit.id}`, this.form);
+        } else {
+          response = await axios.post("/sertificate", this.form);
         }
-        else{
-          this.$emit("status", {message:"Error inserting certificate"});
-        }
-        this.closeModal()
 
+        if (response.status === 201 || response.status === 200) {
+          this.$emit("status", {
+            message: this.edit ? "Sertifikat yangilandi" : "Sertifikat yaratildi"
+          });
+        } else {
+          this.$emit("status", { message: "Xatolik yuz berdi" });
+        }
+
+        this.closeModal();
       } catch (error) {
-        this.$emit("status", {message:"Error inserting certificate"});
+        this.$emit("status", { message: "Server bilan bog'lanishda xatolik" });
+        this.closeModal();
       }
-      this.closeModal()
     },
   },
+  mounted() {
+    if (!this.edit) {
+      this.generateId();
+    }
+  }
 };
 </script>

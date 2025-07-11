@@ -34,7 +34,7 @@
             <div class="cell">{{ data?.sertificate_Id || data.id }}</div>
             <div class="cell" :title="data.title">
               {{
-                data?.first_Name + data.last_Name ||
+                data?.first_Name + " " + data.last_Name ||
                 data.name + " " + data.surname
               }}
             </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="cell">{{ data?.accepted_Date || data.givenDate }}</div>
             <div class="cell d-flex gap12 j-end" >
-              <Icons name="edit" class="icon info"  v-show="data.is_active"/>
+              <Icons name="edit" class="icon info" @click="EditSertifikat(data)"  v-show="data.is_active"/>
               <Icons
                 name="deleted"
                 class="icon danger"
@@ -62,6 +62,8 @@
     v-if="openModal"
     @close="openModal = event"
     @status="CreatedSertificate($event)"
+    :edit="editCurrentSertifikat"
+    @reset-edit="editCurrentSertifikat=null"
   />
 </template>
 <script>
@@ -79,6 +81,8 @@ export default {
       statistics: [],
       searchParameter: null,
       openModal: false,
+
+      editCurrentSertifikat : null
     };
   },
   computed: {
@@ -111,6 +115,11 @@ export default {
   },
 
   methods: {
+    EditSertifikat(item){
+
+      this.openModal=true
+      this.editCurrentSertifikat=item
+    },
     hasEnoughValidFields(item) {
       const fieldsToCheck = [
         item.first_Name || item.name,
