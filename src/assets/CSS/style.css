@@ -246,7 +246,7 @@ li {
 
 .create-button {
   border-radius: 8px;
-  background: #5565FF;
+  background: #f1d11a;
   display: flex;
   padding: 12px 40px;
   justify-content: center;
@@ -281,7 +281,7 @@ li {
 .sendButton {
   color: #FFF;
   border-radius: 5px;
-  background: #5565FF;
+  background: #f1d11a;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -301,7 +301,7 @@ li {
 }
 
 .info {
-  background: #5565FF;
+  background: #f1d11a;
 }
 
 .danger {
@@ -419,7 +419,7 @@ li {
 }
 
 .form-item:focus-within {
-  border: 1px solid #5565FF;
+  border: 1px solid #f1d11a;
 }
 
 .form-item>input {
@@ -437,7 +437,7 @@ li {
 .login-create {
   margin-top: 80px;
   border-radius: 8px;
-  background: #5565FF;
+  background: #f1d11a;
   display: flex;
   height: 60px;
   padding: 21px 0px 20px 0px;
@@ -454,7 +454,7 @@ li {
 .right-content {
   width: 45%;
   height: 95%;
-  background: #5565FF;
+  background: #f1d11a;
   border-radius: 30px;
   display: flex;
   justify-content: center;
@@ -594,7 +594,7 @@ th {
   left: 0;
   width: 100%;
   height: 100%;
-  border: 10px solid #5565FF;
+  border: 10px solid #f1d11a;
   border-radius: 50%;
   animation: pulse 0.8s infinite;
 }
