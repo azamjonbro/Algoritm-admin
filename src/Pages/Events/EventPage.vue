@@ -1,13 +1,18 @@
+
+<template>
+ <div class="paga">
+  <div class="page-top">
+   
+  </div>
+  <div class="page-bottom"></div>
+ </div>
+</template>
 <script>
 export default {
  
 }
 </script>
-<template>
- <div>
- Assalomu alaykum 
- </div>
-</template>
+
 <style >
  
 </style>

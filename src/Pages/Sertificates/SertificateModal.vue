@@ -76,7 +76,7 @@ export default {
         first_Name: "",
         last_Name: "",
         stack: "",
-        accepted_Date: "",
+        accepted_Date: "" || new Date(),
         sertificate_Id: "",
         teacherName: "",
         is_active: true,
@@ -89,6 +89,8 @@ export default {
         { text: "SMM", value: "SMM" },
         { text: "IT Kids", value: "IT Kids" },
         { text: "Grafik dizayn", value: "Grafik dizayn" },
+        { text: "Kompyuter Savodxonlik", value: "Kompyuter Savodxonlik" },
+
       ]
     };
   },
