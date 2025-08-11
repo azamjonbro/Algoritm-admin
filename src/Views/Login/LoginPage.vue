@@ -36,7 +36,7 @@
       this.loading = true;
 
       try {
-        const response = await api.post('/user/signin', {
+        const response = await api.post('/api/auth/login', {
           username: this.login,
           password: this.password
         });
