@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://algoweb-production.up.railway.app', 
+  baseURL: 'https://algoritm.safonon.uz', 
   timeout: 10000, 
   headers: {
     'Content-Type': 'application/json',
