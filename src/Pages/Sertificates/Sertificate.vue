@@ -133,7 +133,7 @@ export default {
       });
     },
     async getAllStatistics() {
-      let response = await axios.get("/sertificate");
+      let response = await axios.get("/api/sertificates");
       console.log("data keldi",response.data);
       this.statistics=response.data
     },
