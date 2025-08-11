@@ -43,7 +43,7 @@
             <div class="cell" :title="data.subtitle">
               {{ data?.stack || data?.courseName }}
             </div>
-            <div class="cell">{{ data?.accepted_Date || data.givenDate }}</div>
+            <div class="cell">{{ formatDate(data?.accepted_Date) }}</div>
             <div class="cell d-flex gap12 j-end" >
               <Icons name="edit" class="icon info" @click="EditSertifikat(data)"  v-show="data.is_active"/>
               <Icons
@@ -115,6 +115,14 @@ export default {
   },
 
   methods: {
+    formatDate(date) {
+      if (!date) return '';
+      const d = new Date(date);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}-${month}-${year}`;
+    },
     EditSertifikat(item){
 
       this.openModal=true
