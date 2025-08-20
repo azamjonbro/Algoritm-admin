@@ -138,7 +138,7 @@ export default {
         let response;
         if (this.edit && this.edit.id) {
           
-          response = await axios.patch(`/api/sertificatess/${this.edit.id}`, this.form);
+          response = await axios.patch(`/api/sertificates/${this.edit.id}`, this.form);
         } else {
           response = await axios.post("/api/sertificates", this.form);
         }

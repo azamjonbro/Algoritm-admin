@@ -155,7 +155,7 @@ export default {
       this.openModal = false;
     },
     async deleteUser(id) {
-      let response = await axios.delete("/sertificate/" + id);
+      let response = await axios.delete("/api/sertificates" + id);
       console.log(response);
       if (response.status == 200) {
         this.getAllStatistics();
