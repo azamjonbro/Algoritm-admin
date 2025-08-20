@@ -58,7 +58,7 @@ export default {
     },
     methods: {
         async getAllStatistics() {
-            let response = await axios.get('/statistics')
+            let response = await axios.get('/api/statistics');
             this.statistics = response?.data
         },
         openModalFunc() {
