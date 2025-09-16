@@ -62,7 +62,6 @@ export default {
   props: {
     edit: {
       type: Object,
-      default: null
     }
   },
   components: {
@@ -136,7 +135,7 @@ export default {
     async submitForm() {
       try {
         let response;
-        if (this.edit && this.edit.id) {
+        if (this.edit ) {
           
           response = await axios.put(`/api/sertificates/${this.edit.id}`, this.form);
         } else {
