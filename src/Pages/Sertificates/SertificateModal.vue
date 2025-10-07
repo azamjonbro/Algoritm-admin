@@ -137,7 +137,7 @@ export default {
         let response;
         if (this.edit ) {
           
-          response = await axios.put(`/api/sertificates/${this.edit.id}`, this.form);
+          response = await axios.put(`/api/sertificates/${this.edit._id}`, this.form);
         } else {
           response = await axios.post("/api/sertificates", this.form);
         }

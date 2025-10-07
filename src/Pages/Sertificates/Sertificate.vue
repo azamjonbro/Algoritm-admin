@@ -49,7 +49,7 @@
               <Icons
                 name="deleted"
                 class="icon danger"
-                @click="deleteUser(data?.id)"
+                @click="deleteUser(data?._id)"
                 v-show="data.is_active"
               />
             </div>
@@ -155,7 +155,9 @@ export default {
       this.openModal = false;
     },
     async deleteUser(id) {
-      let response = await axios.delete("/api/sertificates" + id);
+      console.log(id);
+    
+      let response = await axios.delete("/api/sertificates/" + id);
       console.log(response);
       if (response.status == 200) {
         this.getAllStatistics();
