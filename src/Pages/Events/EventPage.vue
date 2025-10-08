@@ -34,6 +34,7 @@
 </template>
 <script>
 import Icons from "@/components/Icons.vue";
+import api from "@/Utils/axios"
 export default {
   name: "EventPage",
   components: {
@@ -70,6 +71,12 @@ export default {
     }
   },
   methods: {
+    getAllEvents(){
+      api.get("/api/videos/video-opinions").then((data)=>{
+        console.log(data);
+        
+      })
+    },
     openModalFunc() {
       // Logic to open modal for creating new event
     },
@@ -81,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    // Fetch events from API or other source
+    this.getAllEvents() 
   }
 }
 </script>
