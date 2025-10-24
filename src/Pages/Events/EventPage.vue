@@ -22,6 +22,8 @@
       <div class="cell">{{ data.id }}</div>
       <div class="cell">{{ data.name }}</div>
       <div class="cell">{{ data.date }}</div>
+      <div class="cell">{{ data.direction }}</div>
+      <div class="cell">{{ data.createdAt }}</div>
       <div class="cell d-flex gap12 j-end">
        <Icons name="edit" class="icon info" @click="editEvent(data)" />
        <Icons name="deleted" class="icon danger" @click="deleteEvent(data.id)" />
