@@ -17,11 +17,12 @@
      </div>
     </div>
     <div class="table-body">
-     <div class="row" v-for="(data, index) in filteredEvents" :key="index">
+     <div class="row" v-for="(data, index) in events" :key="index">
       <div class="cell">{{ index + 1 }}</div>
       <div class="cell">{{ data.id }}</div>
-      <div class="cell">{{ data.name }}</div>
-      <div class="cell">{{ data.date }}</div>
+      <div class="cell">{{ data.title }}</div>
+      <div class="cell">{{ data.direction }}</div>
+      <div class="cell">{{ data.createdAt }}</div>
       <div class="cell d-flex gap12 j-end">
        <Icons name="edit" class="icon info" @click="editEvent(data)" />
        <Icons name="deleted" class="icon danger" @click="deleteEvent(data.id)" />
@@ -63,19 +64,19 @@ export default {
     };
   },
   computed: {
-    filteredEvents() {
-      return this.events.filter(event => 
-        event.name.toLowerCase().includes(this.searchParameter.toLowerCase()) ||
-        event.id.toString().includes(this.searchParameter)
-      );
-    }
+    
   },
   methods: {
-    getAllEvents(){
-      api.get("/api/videos/video-opinions").then((data)=>{
-        console.log(data);
+    async getAllEvents(){
+      try {
+        const response = await api.get("/api/videos/video-opinions");
         
-      })
+        this.events = response.data;
+        console.log(response.data);
+        
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
     },
     openModalFunc() {
       // Logic to open modal for creating new event
