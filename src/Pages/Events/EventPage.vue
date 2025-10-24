@@ -20,7 +20,8 @@
      <div class="row" v-for="(data, index) in events" :key="index">
       <div class="cell">{{ index + 1 }}</div>
       <div class="cell">{{ data.id }}</div>
-      <div class="cell">{{ data.title }}</div>
+      <div class="cell">{{ data.name }}</div>
+      <div class="cell">{{ data.date }}</div>
       <div class="cell">{{ data.direction }}</div>
       <div class="cell">{{ data.createdAt }}</div>
       <div class="cell d-flex gap12 j-end">
