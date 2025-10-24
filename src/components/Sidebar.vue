@@ -17,9 +17,8 @@
         users: {
           manager: [
             { title: "Sertificates", icon: "home", page: "dashboard" },
-            { title: "Statistics", icon: "algorithm", page: "statistics" },
-            { title: "Opinions", icon: "opinion", page: "opinion" },
-
+            // { title: "Statistics", icon: "algorithm", page: "statistics" },
+            // { title: "Opinions", icon: "opinion", page: "opinion" },
             // { title: "Certificates", icon: "sertificat", page: "sertificate" },
             { title: "Events", icon: "event", page: "event" },
             { title: "Settings", icon: "setting", page: "settings" },
