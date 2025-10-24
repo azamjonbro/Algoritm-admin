@@ -10,20 +10,18 @@
     <div class="table-header">
      <div class="row">
       <div class="cell">Index</div>
-      <div class="cell">ID</div>
-      <div class="cell">Name</div>
+      <div class="cell">Title</div>
+      <div class="cell">Direction</div>
       <div class="cell">Date</div>
       <div class="cell d-flex j-end"></div>
      </div>
     </div>
     <div class="table-body">
      <div class="row" v-for="(data, index) in events" :key="index">
-      <div class="cell">{{ index + 1 }}</div>
-      <div class="cell">{{ data.id }}</div>
-      <div class="cell">{{ data.name }}</div>
-      <div class="cell">{{ data.date }}</div>
+      <div class="cell">{{ index+1 }}</div>
+      <div class="cell">{{ data.title }}</div>
       <div class="cell">{{ data.direction }}</div>
-      <div class="cell">{{ data.createdAt }}</div>
+      <div class="cell">{{ formatDate(data.createdAt) }}</div>
       <div class="cell d-flex gap12 j-end">
        <Icons name="edit" class="icon info" @click="editEvent(data)" />
        <Icons name="deleted" class="icon danger" @click="deleteEvent(data.id)" />
@@ -78,6 +76,10 @@ export default {
       } catch (error) {
         console.error("Error fetching events:", error);
       }
+    },
+    formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
     },
     openModalFunc() {
       // Logic to open modal for creating new event
