@@ -42,23 +42,7 @@ export default {
   },
   data() {
     return {
-      events: [
-        {
-          id: 1,
-          name: "Event One",
-          date: "2023-10-01"
-        },
-        {
-          id: 2,
-          name: "Event Two",
-          date: "2023-10-02"
-        },
-        {
-          id: 3,
-          name: "Event Three",
-          date: "2023-10-03"
-        }
-      ],
+      events: [],
       searchParameter: "",
     };
   },
