@@ -1,11 +1,11 @@
 <template>
   <transition name="slide-modal">
-    <div class="modal" v-if="show">
+    <div class="modal">
       <div class="modal-content relative">
-        <Icons name="xIcon" class="xIcon" @click="closeModal" />
-        <h2>Sertifikat ma'lumotlarini qo‘shish</h2>
+        <!-- <Icons name="xIcon" class="xIcon" @click="closeModal" /> -->
+        <h2>Event ma'lumotlarini qo‘shish</h2>
 
-        <form class="form modal-form" @submit.prevent="submitForm">
+        <form class="form modal-forma" @submit.prevent="submitForm">
           <div class="form-group">
             <label>Video fayl</label>
             <input type="file" />
@@ -37,15 +37,8 @@
 </template>
 
 <script>
-import Icons from '@/components/Icons.vue'
-
 export default {
-  components: { Icons },
   props: {
-    show: {
-      type: Boolean,
-      required: true
-    }
   },
   emits: ['close'],
   methods: {
@@ -101,9 +94,7 @@ export default {
   transform: translateX(0);
 }
 
-.modal-form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.modal-forma {
   gap: 20px;
   margin-top: 20px;
 }
@@ -128,9 +119,10 @@ export default {
 }
 
 .modal-buttons {
-  grid-column: span 2;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: end;
   gap: 20px;
   margin-top: 30px;
 }
