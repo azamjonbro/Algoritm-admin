@@ -31,18 +31,22 @@
    </div>
   </div>
  </div>
+ <EventModel v-if="openModal"/>
 </template>
 <script>
 import Icons from "@/components/Icons.vue";
 import api from "@/Utils/axios"
+import EventModel from "./EvetModal.vue"
 export default {
   name: "EventPage",
   components: {
-    Icons
+    Icons,
+    EventModel
   },
   data() {
     return {
       events: [],
+      openModal:false,
       searchParameter: "",
     };
   },
@@ -66,6 +70,7 @@ export default {
       return new Date(dateString).toLocaleDateString(undefined, options);
     },
     openModalFunc() {
+      this.openModal=true
       // Logic to open modal for creating new event
     },
     editEvent() {
