@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-modal">
-    <div class="modal">
+    <div class="modal" @click.self="closeModal">
       <div class="modal-content relative">
         <!-- <Icons name="xIcon" class="xIcon" @click="closeModal" /> -->
         <h2>Event ma'lumotlarini qo‘shish</h2>

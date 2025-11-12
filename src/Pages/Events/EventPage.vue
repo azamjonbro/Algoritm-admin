@@ -31,7 +31,7 @@
    </div>
   </div>
  </div>
- <EventModel v-if="openModal"/>
+ <EventModel v-if="openModal" @close="closeModal($event)"/>
 </template>
 <script>
 import Icons from "@/components/Icons.vue";
@@ -72,6 +72,11 @@ export default {
     openModalFunc() {
       this.openModal=true
       // Logic to open modal for creating new event
+    },
+    closeModal(close){
+      console.log(close);
+      
+      this.openModal=false
     },
     editEvent() {
       // Logic to edit the selected event
