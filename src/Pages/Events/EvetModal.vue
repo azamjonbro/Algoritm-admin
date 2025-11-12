@@ -46,7 +46,6 @@ export default {
       this.$emit('close')
     },
     submitForm() {
-      console.log('Form yuborildi')
       this.closeModal()
     }
   }
