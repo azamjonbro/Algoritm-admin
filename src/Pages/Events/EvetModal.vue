@@ -8,22 +8,22 @@
         <form class="form modal-forma" @submit.prevent="submitForm">
           <div class="form-group">
             <label>Video fayl</label>
-            <input type="file" />
+            <input type="file" @change="handleFileChange('video', $event)" />
           </div>
 
           <div class="form-group">
             <label>Poster fayl</label>
-            <input type="file" />
+            <input type="file" @change="handleFileChange('poster', $event)" />
           </div>
 
           <div class="form-group">
             <label>Sarlavha</label>
-            <input type="text" placeholder="Test video" />
+            <input type="text" placeholder="Test video" v-model="title" />
           </div>
 
           <div class="form-group">
             <label>Yo‘nalish</label>
-            <input type="text" placeholder="test" />
+            <input type="text" placeholder="test" v-model="direction" />
           </div>
 
           <div class="modal-buttons">
@@ -37,18 +37,61 @@
 </template>
 
 <script>
+import axios from "@/Utils/axios.js"
 export default {
   props: {
   },
   emits: ['close'],
+  data() {
+    return {
+      videoFile: null,
+      posterFile: null,
+      title: "",
+      direction: ""
+    }
+  },  
   methods: {
-    closeModal() {
-      this.$emit('close')
-    },
-    submitForm() {
+  closeModal() {
+    this.$emit('close')
+  },
+  handleFileChange(type, event) {
+    const file = event.target.files[0]
+    if (!file) return
+
+    if (type === 'video') {
+      this.videoFile = file
+    } else if (type === 'poster') {
+      this.posterFile = file
+    }
+  },
+  async submitForm() {
+    try {
+      const formData = new FormData()
+      formData.append('video', this.videoFile)
+      formData.append('poster', this.posterFile)
+      formData.append('title', this.title)
+      formData.append('direction', this.direction)
+
+      await axios.post("/api/videos/video-opinions", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        console.log("Video uploaded successfully:", response.data)
+      })
+      .catch(error => {
+        console.error("Error uploading video:", error)
+      })
+
+      
+
       this.closeModal()
+    } catch (error) {
+      console.log(error.message)
     }
   }
+}
 }
 </script>
 
