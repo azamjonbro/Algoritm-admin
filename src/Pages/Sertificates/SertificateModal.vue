@@ -81,8 +81,8 @@ export default {
         is_active: true,
       },
       option: [
-        { text: "Web dasturlash : Front End", value: "Web dasturlash : Front End" },
-        { text: "Back end", value: "Back End" },
+        { text: "Web dasturlash - Front End", value: "Web dasturlash - Front End" },
+        { text: "Web dasturlash - Back end", value: "Web dasturlash - Back End" },
         { text: "Full Stack", value: "Full Stack" },
         { text: "Kiberxavfsizlik", value: "Kiberxavfsizlik" },
         { text: "SMM", value: "SMM" },
