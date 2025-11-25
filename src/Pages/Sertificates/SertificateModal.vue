@@ -81,7 +81,7 @@ export default {
         is_active: true,
       },
       option: [
-        { text: "Front End", value: "Front End" },
+        { text: "Web dasturlash : Front End", value: "Web dasturlash : Front End" },
         { text: "Back end", value: "Back End" },
         { text: "Full Stack", value: "Full Stack" },
         { text: "Kiberxavfsizlik", value: "Kiberxavfsizlik" },
