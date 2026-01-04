@@ -48,7 +48,7 @@
             text: "Вход успешен",
             type:"success",
           };
-          localStorage.setItem('user', JSON.stringify(response?.data));
+          localStorage.setItem('token', JSON.stringify(response?.data.token));
           this.$router.push('/');
         }
         else{
