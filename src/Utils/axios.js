@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://algoritm.safonon.uz', 
+  baseURL: 'https://algoritm.techinfo.uz', 
   timeout: 100000000000000, 
   headers: {
     'Content-Type': 'application/json',
