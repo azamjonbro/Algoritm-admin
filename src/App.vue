@@ -7,8 +7,8 @@
 export default {
   name: 'App',
   mounted(){
-    let userToken = JSON.parse(localStorage.getItem("user"))
-    console.log(userToken);
+    let userToken = localStorage.getItem("token")
+    console.log("Token in App.vue:", userToken);
     if(!userToken){
       this.$router.push('/login')
     }
