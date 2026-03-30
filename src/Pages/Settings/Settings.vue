@@ -64,7 +64,7 @@ export default {
             } 
 
             try {   
-            const response = await axios.patch('/user/1', {
+            const response = await axios.patch('/api/auth/user/1', {
             username: this.newUser.username,
             password: this.newUser.password
         }, {
