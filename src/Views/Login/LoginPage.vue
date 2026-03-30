@@ -10,6 +10,8 @@
     },
     data() {
     return {
+      step: 1, // 1 for login, 2 for OTP
+      otp: '',
       login: '',
       showSvg:false,
       password: '',
@@ -23,49 +25,107 @@
   },
   methods: {
     async handleLogin() {
-
-      if (!this.login || !this.password) {
-        this.toastOptions = {
-          open: true,
-          text: "Iltimos, login va parolni kiriting",
-          type: "error",
-        };
-        return;
-      }
-
-      this.loading = true;
-
-      try {
-        const response = await api.post('/api/auth/login', {
-          username: this.login,
-          password: this.password
-        });
-        console.log(response);
-
-        if (response.status==201|| response.status==200) {
+      if (this.step === 1) {
+        if (!this.login || !this.password) {
           this.toastOptions = {
             open: true,
-            text: "Вход успешен",
-            type:"success",
+            text: "Iltimos, login va parolni kiriting",
+            type: "error",
           };
-          localStorage.setItem('token', JSON.stringify(response?.data.token));
-          this.$router.push('/');
+          return;
         }
-        else{
+
+        this.loading = true;
+
+        try {
+          const response = await api.post('/api/auth/login', {
+            username: this.login,
+            password: this.password
+          });
+          console.log("Login response:", response);
+
+          if (response.status === 200 || response.status === 201) {
+            this.toastOptions = {
+              open: true,
+              text: "Login va parol to'g'ri. OTP kodni kiriting",
+              type: "success",
+            };
+            this.step = 2; // Move to OTP step
+          } else {
+            this.toastOptions = {
+              open: true,
+              text: "Kirib bo'lmaydi",
+              type: "error",
+            };
+          }
+        } catch (error) {
+          const status = error.response?.status;
+          let msg = error.response?.data?.message || "Xatolik yuz berdi";
+          
+          if (status === 429) {
+            msg = "Juda ko'p urinishlar! Iltimos bir oz kuting.";
+          } else if (status === 403) {
+            msg = "Sizning akkauntingiz bloklandi";
+          }
+
           this.toastOptions = {
             open: true,
-            text: "Kirib bolmaydi",
-            type:"error",
+            text: msg,
+            type: "error"
           };
+        } finally {
+          this.loading = false;
         }
-      } catch (error) {
-        this.toastOptions = {
-          open: true,
-          text: error.response?.data?.message || "Xatolik yuz berdi",
-          type: "error"
-        };
-      } finally {
-        this.loading = false;
+      } else if (this.step === 2) {
+        if (!this.otp) {
+          this.toastOptions = {
+            open: true,
+            text: "Iltimos, OTP kodni kiriting",
+            type: "error",
+          };
+          return;
+        }
+
+        this.loading = true;
+
+        try {
+          const response = await api.post('/api/auth/verify', {
+            username: this.login,
+            receiveCode: this.otp
+          });
+          console.log("Verify response:", response);
+
+          if (response.status === 200 || response.status === 201) {
+            this.toastOptions = {
+              open: true,
+              text: "Muvaffaqiyatli tizimga kirdingiz",
+              type: "success",
+            };
+            
+            // Expected backend fields: accessToken & refreshToken
+            const atk = response.data.accessToken || response.data.token;
+            const rtk = response.data.refreshToken;
+
+            if (atk) localStorage.setItem('token', JSON.stringify(atk));
+            if (rtk) localStorage.setItem('refreshToken', JSON.stringify(rtk));
+
+            this.$router.push('/');
+          } else {
+            this.toastOptions = {
+              open: true,
+              text: "OTP noto'g'ri",
+              type: "error",
+            };
+          }
+        } catch (error) {
+          this.toastOptions = {
+            open: true,
+            text: error.response?.data?.message || "OTP kod xato",
+            type: "error"
+          };
+        } finally {
+          this.loading = false;
+        }
       }
     }
   },
@@ -101,16 +161,32 @@
             <h3 class="login-title">Xush kelibsiz</h3>
             <p>Iltimos login va parolingizni kiriting</p>
           </div>
-          <div class="login-container-form">
+          <div class="login-container-form" v-if="step === 1">
             <div class="form-item d-flex radius1 border1">
-              <input type="text" :value="login" @input="login = $event.target.value.trim()" placeholder="Ismingizni kiriting">
+              <input type="text" :value="login" @input="login = $event.target.value.trim()" placeholder="Ismingizni kiriting" :disabled="loading">
               <Icons name="user" />
             </div>
             <div class="form-item d-flex radius1 border1">
-              <input :type="!type ? 'password' : 'text'" :value="password" @input="password = $event.target.value.trim()" placeholder="Parolingizni kiriting">
+              <input :type="!type ? 'password' : 'text'" :value="password" @input="password = $event.target.value.trim()" placeholder="Parolingizni kiriting" @keyup.enter="handleLogin" :disabled="loading">
               <Icons name="password" @click="type = !type" />
             </div>
-            <button type="button" @click="handleLogin" class="login-create">Sahifaga kirish</button>
+            <button type="button" @click="handleLogin" class="login-create" :disabled="loading">
+              {{ loading ? "Kutilmoqda..." : "Kirish" }}
+            </button>
+          </div>
+
+          <div class="login-container-form" v-else>
+            <div class="form-item d-flex radius1 border1">
+              <input type="text" :value="otp" @input="otp = $event.target.value.trim()" placeholder="OTP kodni kiriting" @keyup.enter="handleLogin" :disabled="loading" autofocus>
+              <!-- reusing password icon for OTP as a visual placeholder -->
+              <Icons name="password" /> 
+            </div>
+            <button type="button" @click="handleLogin" class="login-create" :disabled="loading" style="margin-bottom: 8px;">
+              {{ loading ? "Tekshirilmoqda..." : "Tasdiqlash" }}
+            </button>
+            <button type="button" @click="step = 1; otp = ''" class="login-create" style="background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.5);" :disabled="loading">
+              Orqaga
+            </button>
           </div>
         </div>
       </div>
